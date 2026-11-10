@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Geology domain logic lives in `src/lib/geo` with no React/three.js imports, so it is unit-testable; components only render its output.
+- World data stays Z-up metres; render scaling, vertical exaggeration and Y-up rotation happen only in the Viewer scene transform, so exports keep true units.
+- Explorer route is `ssr: false` and the Viewer is lazy-loaded, because WebGL cannot render on the server.
+- Three.js scene colours are hex constants in `Viewer.tsx` mirroring CSS tokens, since three cannot read CSS variables.
+- Missing/invalid uploaded samples are reported as errors, never filled, to avoid inventing data.
