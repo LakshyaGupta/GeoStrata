@@ -127,7 +127,11 @@ function Wells({ ds }: { ds: GeoDataset }) {
             <Html position={[w.x, w.y, w.wellheadZ + 160 / vex]} center zIndexRange={[20, 0]}>
               <button
                 type="button"
-                onClick={() => select({ kind: "well", id: w.id })}
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  select({ kind: "well", id: w.id });
+                }}
                 className={`num whitespace-nowrap rounded border px-1.5 py-0.5 text-[10px] backdrop-blur-sm transition-colors ${
                   active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background/70 text-foreground hover:border-primary"
                 }`}

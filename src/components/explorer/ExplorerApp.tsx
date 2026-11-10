@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -39,6 +39,11 @@ function ViewportOverlay() {
 export function ExplorerApp() {
   const [left, setLeft] = useState(false);
   const [right, setRight] = useState(false);
+  const selection = useExplorer((s) => s.selection);
+  // Below the xl breakpoint the inspector is a drawer: open it when something is picked.
+  useEffect(() => {
+    if (selection && window.matchMedia("(max-width: 1279px)").matches) setRight(true);
+  }, [selection]);
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-background">
       <TopBar onLeft={() => setLeft(true)} onRight={() => setRight(true)} />
