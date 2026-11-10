@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArchitectureRouteImport } from './routes/architecture'
+import { Route as CaseStudyRouteImport } from './routes/case-study'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ExplorerRouteImport } from './routes/explorer'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const ArchitectureRoute = ArchitectureRouteImport.update({
   id: '/architecture',
   path: '/architecture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudyRoute = CaseStudyRouteImport.update({
+  id: '/case-study',
+  path: '/case-study',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DocsRoute = DocsRouteImport.update({
@@ -38,12 +44,14 @@ const ExplorerRoute = ExplorerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/case-study': typeof CaseStudyRoute
   '/docs': typeof DocsRoute
   '/explorer': typeof ExplorerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/case-study': typeof CaseStudyRoute
   '/docs': typeof DocsRoute
   '/explorer': typeof ExplorerRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/architecture': typeof ArchitectureRoute
+  '/case-study': typeof CaseStudyRoute
   '/docs': typeof DocsRoute
   '/explorer': typeof ExplorerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/architecture' | '/docs' | '/explorer'
+  fullPaths: '/' | '/architecture' | '/case-study' | '/docs' | '/explorer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/architecture' | '/docs' | '/explorer'
-  id: '__root__' | '/' | '/architecture' | '/docs' | '/explorer'
+  to: '/' | '/architecture' | '/case-study' | '/docs' | '/explorer'
+  id: '__root__' | '/' | '/architecture' | '/case-study' | '/docs' | '/explorer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ArchitectureRoute: typeof ArchitectureRoute
+  CaseStudyRoute: typeof CaseStudyRoute
   DocsRoute: typeof DocsRoute
   ExplorerRoute: typeof ExplorerRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/architecture'
       fullPath: '/architecture'
       preLoaderRoute: typeof ArchitectureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-study': {
+      id: '/case-study'
+      path: '/case-study'
+      fullPath: '/case-study'
+      preLoaderRoute: typeof CaseStudyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/docs': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ArchitectureRoute: ArchitectureRoute,
+  CaseStudyRoute: CaseStudyRoute,
   DocsRoute: DocsRoute,
   ExplorerRoute: ExplorerRoute,
 }
